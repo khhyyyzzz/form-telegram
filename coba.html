@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form ke Telegram</title>
+</head>
+<body>
+
+<h2>Form Kontak</h2>
+
+<form id="formTelegram">
+  <input type="text" id="nama" placeholder="Nama" required><br><br>
+  <input type="email" id="email" placeholder="Email" required><br><br>
+  <textarea id="pesan" placeholder="Pesan"></textarea><br><br>
+  <button type="submit">Kirim</button>
+</form>
+
+<script>
+document.getElementById("formTelegram").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const nama = document.getElementById("nama").value;
+  const email = document.getElementById("email").value;
+  const pesan = document.getElementById("pesan").value;
+
+  const token = "8503671417:AAG80rLVyoevMFXEw0eiNZikUEzZly7ddPE";
+  const chat_id = "1877495228";
+
+  const text = `📩 Form Baru:\nNama: ${nama}\nEmail: ${email}\nPesan: ${pesan}`;
+
+  fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      chat_id: chat_id,
+      text: text
+    })
+  })
+  .then(response => {
+    alert("Pesan berhasil dikirim!");
+    document.getElementById("formTelegram").reset();
+  })
+  .catch(error => {
+    alert("Gagal mengirim!");
+  });
+});
+</script>
+
+</body>
+</html>
